@@ -32,8 +32,9 @@ module.exports = {
       createdTask = transformFields(result);
       const creator = await User.findById(req.userId);
       if (!creator) { throw new Error ("Cannot create task because user not found"); };
-      creator.createTask.push(newTask);
+      creator.createdTask.push(newTask);
       await creator.save();
+      return createdTask;
     } catch (err) {
       throw err;
     }
@@ -70,12 +71,13 @@ module.exports = {
   deleteTask: async (args, req) => {
     if (!req.isAuth) {throw new Error( "Login to delete a task!" )};
     try {
-      const taskToBeDeleted = await Task.findById(args.taskId).populate('description');
+      const taskToBeDeleted = await (await Task.findById(args.taskId)).populate('description');
+      const result = transformFields(taskToBeDeleted);
       await Task.deleteOne( { _id: args.taskId } );
-      return transformFields(taskToBeDeleted);
+      return result;
     } catch (err) {
       throw err;
     }
   }
-  
+
 };

@@ -1,6 +1,6 @@
-const { buildASTSchema } = require('graphql');
+const { buildSchema } = require('graphql');
 
-module.exports = buildASTSchema(
+module.exports = buildSchema (
   `
     type User {
       _id: ID!
