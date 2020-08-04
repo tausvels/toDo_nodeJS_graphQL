@@ -10,9 +10,7 @@ module.exports = {
   getAllTasks: async () => {
     try {
       const allTasks = await Task.find();
-      return allTasks.map( task => {
-        return transformFields(task);
-      });
+      return allTasks.map( task => transformFields(task));
     } catch (err) { 
       throw err;
     };
@@ -41,29 +39,43 @@ module.exports = {
     }
   },
 
-  filterTasksBy: async () => {
+  filterTasksBy: async args => {
     try {
-      
+      const allTasks = await Task.find({ category: args.filter.toLowerCase() });
+      return allTasks.map( task => transformFields(task));
     } catch (err) {
-      
+      throw err;
     }
   },
 
-  updateTask: async () => {
+  updateTask: async (args, req) => {
+    if (!req.isAuth) {throw new Error( "Login to update a task!" )};
+    const updatedFields = {
+      title: args.updateTaskInput.title,
+      description: args.updateTaskInput.description,
+      date: new Date(args.updateTaskInput.date),
+      category: args.updateTaskInput.category
+    }
     try {
-      
+      const updatedTask = await Task.findOneAndUpdate( {_id: args.updateTaskInput._id}, updatedFields, {
+        new: true,
+        useFindAndModify: false
+      });
+      return transformFields(updatedTask);
     } catch (err) {
-      
+      throw err;
     }
   },
 
-  deleteTask: async () => {
+  deleteTask: async (args, req) => {
+    if (!req.isAuth) {throw new Error( "Login to delete a task!" )};
     try {
-      
+      const taskToBeDeleted = await Task.findById(args.taskId).populate('description');
+      await Task.deleteOne( { _id: args.taskId } );
+      return transformFields(taskToBeDeleted);
     } catch (err) {
-      
+      throw err;
     }
   }
-
-
+  
 };

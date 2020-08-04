@@ -47,7 +47,7 @@ module.exports = buildASTSchema(
     type RootMutation {
       createUser(userInput: UserInput): User
       createTask(taskInput: TaskInput): Task
-      updateTask(taskId: ID!): Task!
+      updateTask(updateTaskInput: TaskInput): Task!
       deleteTask(taskId: ID!): Task!
     }
 
