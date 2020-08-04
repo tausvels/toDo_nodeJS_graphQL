@@ -3,7 +3,6 @@
  */
 const User = require('../../models/User');
 const Task = require('../../models/Task');
-const task = require('../../models/Task');
 
 /**
  * The helper functions
@@ -41,3 +40,7 @@ const taskFieldCondition = async taskIds => {
      creator: userFieldCondition.bind(this, argObj.creator)
    }
  }
+
+module.exports = {
+  transformFields
+};

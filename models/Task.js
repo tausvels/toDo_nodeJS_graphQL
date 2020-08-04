@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
@@ -6,8 +7,10 @@ const taskSchema = new Schema({
   description: String,
   date: {type: Date, required: true},
   category: String,
-}, {
-  timestamps: true
-});
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+}, {timestamps: true});
 
-module.exports = mongoose.Model("Task", taskSchema);
+module.exports = mongoose.model('Task', taskSchema);

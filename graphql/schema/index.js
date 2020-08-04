@@ -39,7 +39,7 @@ module.exports = buildASTSchema(
     }
 
     type RootQuery {
-      tasks: [Task!]!
+      getAllTasks: [Task!]!
       login(email: String!, password: String!): AuthData!
       filterTasksBy(filter: String!): [Task!]!
     }
