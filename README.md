@@ -12,3 +12,7 @@
   - Update a ToDo Item (Only if Logged In)
   - Delete a ToDo Item (Only if Logged In)
   - Search/filter a ToDo Item by Category through the URL (frontend)
+## Instructions:
+  - Create .env file and update following the given .env.example
+  - npm install
+  - npm start to start the server in nodemon
