@@ -1,5 +1,5 @@
 # A ToDo App Backend
-![image](https://github.com/tausvels/toDo_nodeJS_graphQL/blob/master/resources/ToDo%20App%20Demo.gif, "Demo")
+![Alt Text](https://github.com/tausvels/toDo_nodeJS_graphQL/blob/master/resources/ToDo%20App%20Demo.gif, "Demo")
 ## Stack Used:
   - NodeJS
   - Express
