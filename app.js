@@ -3,13 +3,14 @@
  * */
 require('dotenv').config();
 /**
- * App dependecies, Middleware, Mongoose and GraphQL
+ * App dependecies, GraphQL, Middlewares, and db connection 
  */
 const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
+const bodyParser = require('body-parser');
 const isAuth = require('./middleware/isAuth');
+const cors = require('./middleware/cors');
+const dbConnection = require('./db/dbConnection');
 
 /**
  * Requiring graphQL Schema and Resolvers
@@ -25,15 +26,7 @@ const app = express();
  * Initialize middleware to be consumed
  */
 // preventing cross-origin problem
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "Options") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+app.use(cors);
 app.use(bodyParser.json());
 app.use(isAuth);
 app.use('/graphql', graphqlHTTP({
@@ -46,10 +39,7 @@ app.use('/graphql', graphqlHTTP({
  * Initialize Database Connection and start server once connected
  */
 const startServer = async () => {
-  await mongoose.connect(process.env.mongoDbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  await dbConnection();
   try {
     app.listen(process.env.PORT || 8080, () => {
       if (process.env.PORT) {

@@ -13,7 +13,7 @@ module.exports = buildSchema (
       userId: ID!
       email: String!
       token: String!
-      tokenExpiration: Int!
+      tokenExpiration: String
     }
 
     type Task {
